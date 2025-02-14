@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+      <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    body{
+        background-color: black;
+        color:white;
+        padding:10%
+
+
+    }
+    .error{
+        color: red;
+        font-size :o.9em;
+    }
+</style>
+</head>
+<body>
+        <div class="container mt-5">
+            <h2 class="mb-4 text-center">Resiteration Form</h2>
+            <form id="registerationForm" novalidate>
+        </div>
+        <div class="form-group">
+            <div class="row g-3">
+                <div class="col">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname"  required>
+                    <div class="error" id="firstNameError">First Name is required and should contain only letters</div>
+                </div>    
+                    <div class="col">
+                        <label for="LastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="firstname"  required>
+                        <div class="error" id="lastNameError">Last Name is required and should contain only letters.</div>
+                    </div>
+                    
+                </div>
+            </div> 
+        </div>       
+        <div class="form-group">
+            <label for="userName">User Name</label>
+            <input type="text" class="form-control" id="username" name="usertname" required>
+            <div class="error" id="userNameError">User Name is required.</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="userName">Password</label>
+        <input type="text" class="form-control" id="password" name="password"  required>
+        <div class="error" id="PasswordError">Password is required.</div>
+    </div>
+    <div class="form-group">
+        <label for="userName">Email Address</label>
+        <input type="text" class="form-control" id="email" name="email" required>
+        <div class="error" id="emailError">Valid Email is required.</div>
+    </div>
+    <div class="form-group">
+        <label for="userName">Phone Number</label>
+        <input type="number" class="form-control" id="phone" name="phone"  required>
+        <div class="error" id="emailError">Phone Number is required and should be 10 digits.</div>
+    </div>
+    <div class="form-group">
+        <label>Gender</label>
+    </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="male" checked>
+            <label class="form-check-label"for="male">Male</label> 
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="female" checked>
+            <label class="form-check-label"for="femle">Female</label> 
+        </div>
+    </div>
+    <div class="form-group">
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <label for="state">City</label>
+                <input type="text" class="form-control" id="city" name="city"  required>
+                <div class="error" id="cityError">City is required.</div> 
+            </div>
+            <div class="col">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state"  required>
+                <div class="error" id="stateError">State is required.</div>
+            </div>
+            <div class="col">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" name="dob"  required>
+                <div class="error" id="dobError">Date of Birth is required.</div>
+            </div>
+        </div>
+        
+    </div><br>
+    <div class="form-group form-check">
+       
+        <input type="checkbox" class="form-check-input" id="agree" name="agree" required>
+        <label class="form-check-label" for="agree">I agree to the terms and conditions</label>
+        <div class="error" id="agreeError"></div>
+      </div>
+    </div>
+      <div class="form-group form-check">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+<script>
+    // Show error message and add the invalid class
+    function showError(elementId, show) {
+        const errorElement = document.getElementById(elementId);
+        const inputElement = document.getElementById(elementId.replace('Error', ''));
+        errorElement.style.display = show ? 'block' : 'none';
+        if (show) {
+            inputElement.classList.add('invalid');
+            console.log("invalid")
+        } else {
+            inputElement.classList.remove('invalid');
+        }
+    }
+
+
+    // Main form validation on submit
+    function validateForm() {
+        let isValid = true;
+
+        // Validate name
+        const name = document.getElementById('firstName').value;
+        if (name.length === 0) {
+            showError('firstnameError', true);
+            isValid = false;
+        } else {
+            showError('firstnameError', false);
+        }
+
+        const lname = document.getElementById('lastname').value;
+        if (name.length === 0) {
+            showError('lastnameError', true);
+            isValid = false;
+        } else {
+            showError('lastnameError', false);
+        }
+        // Validate username
+        const username = document.getElementById('username').value;
+        if (username.length < 5) {
+            showError('usernameError', true);
+            isValid = false;
+        }
+
+        // Validate email
+        const email = document.getElementById('email').value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showError('emailError', true);
+            isValid = false;
+        }
+
+        //Validte Password
+        const password = document.getElementById('pass').value;
+        if(password.length < 6){
+            showError('passError', true);
+            isValid = false;
+        } else{
+            showError('passError', false);
+        }
+
+        //validate phone
+        const phone = document.getElementById('phone').value; // Ensure the ID matches the input field
+        const phoneRegex = /^\d{10}$/; // Regex to validate a 10-digit phone number
+        if (!phoneRegex.test(phone)) {
+            showError('phoneError', true); // Ensure the error ID matches the HTML
+            isValid = false;
+        } else {
+            showError('phoneError', false);
+        }
+
+        //validate gender
+        const gender = document.getElementById('gender').value;
+        if (name.length === 0) {
+            showError('genderError', true);
+            isValid = false;
+        } else {
+            showError('genderError', false);
+        }
+
+        //validate city
+        const city = document.getElementById('city').value;
+        if (name.length === 0) {
+            showError('cityError', true);
+            isValid = false;
+        } else {
+            showError('cityError', false);
+        }
+
+        //validate state
+        const state = document.getElementById('state').value;
+        if (state.length === 0) {
+            showError('stateError', true);
+            isValid = false;
+        } else {
+            showError('stateError', false);
+        }
+
+        //validate dob
+        const dob = document.getElementById('dob').value;
+        if (dob.length === 0) {
+            showError('dobError', true);
+            isValid = false;
+        } else {
+            showError('dobError', false);
+        }
+
+        //validate address
+        const add = document.getElementById('add').value;
+        if (add.length === 0) {
+            showError('addError', true);
+            isValid = false;
+        } else {
+            showError('addError', false);
+        }
+
+        return isValid; 
+    }
+</script>
+</body>
+</html>
